@@ -76,16 +76,46 @@ def init_game(grid_length):
 
 #Affichage de la grille
 
+#Converti les 0 en ' '
+def zero_to_blank(grid):
+    n = len(grid)
+    for i in range(n):
+        for j in range(n):
+            if grid[i][j] == 0:
+                grid[i][j] = ' '
+    return grid
+
+#Converti les ' ' en 0
+def blank_to_zero(grid):
+    n = len(grid)
+    for i in range(n):
+        for j in range(n):
+            if grid[i][j] == ' ':
+                grid[i][j] = 0
+    return grid
+
+#retourne la taille de la plus grande chaine de caractère de la grille
+def long_value(game_grid):
+    list_length = len(game_grid)
+    length=0
+    for i in range(list_length):
+        for j in range(list_length):
+            if len(str(game_grid[i][j])) > length:
+                length = len(str(game_grid[i][j]))
+    return length
+
 #Conversion tableau -> grille
-def grid_to_string(game_grid, n):
+def grid_to_string(game_grid):
+    n = max(4,long_value(game_grid)+3)
     list_length = len(game_grid)
     game_grid_copy = [[' ' for j in range(list_length)] for i in range(list_length)]
     for i in range(list_length):
         for j in range(list_length):
+            m = len(str(game_grid[i][j]))
             if game_grid[i][j] == ' ':
                 game_grid_copy[i][j] = (n-3)*' '
             else:
-                game_grid_copy[i][j]=(n-3)//2*' '+str(game_grid[i][j])+(n-4)//2*' '
+                game_grid_copy[i][j]=(n-m-3)//2*' '+str(game_grid[i][j])+(n-m-2)//2*' '
     string = """ """
     for i in range(list_length):
         string += """
@@ -102,27 +132,18 @@ def grid_to_string(game_grid, n):
             string += (n-1)*"="+" "
     return string
 
-#retourne la taille de la plus grande chaine de caractère de la grille
-def long_value(game_grid):
-    list_length = len(game_grid)
-    length=0
-    for i in range(list_length):
-        for j in range(list_length):
-            if len(str(game_grid[i][j])) > length:
-                length = len(str(game_grid[i][j]))
-    return length
-
 #conversion tableau -> grille en prenant en compte les thèmes
 def grid_to_string_with_size_and_theme(game_grid,theme):
-    n=long_value(game_grid)
+    n = max(4,long_value(game_grid)+3)
     list_length = len(game_grid)
     game_grid_copy = [[' ' for j in range(list_length)] for i in range(list_length)]
     for i in range(list_length):
         for j in range(list_length):
+            m = len(str(theme[(game_grid[i][j])]))
             if game_grid[i][j] == ' ':
                 game_grid_copy[i][j] = (n-3)*' '
             else:
-                game_grid_copy[i][j]=(n-3)//2*' '+str(theme[(game_grid[i][j])])+(n-4)//2*' '
+                game_grid_copy[i][j]=(n-m-3)//2*' '+str(theme[(game_grid[i][j])])+(n-m-2)//2*' '
     string = """ """
     for i in range(list_length):
         string += """
@@ -210,6 +231,7 @@ def move_possible(grid):
             liste.append(True)
     return liste
 
+
 #Teste si le jeu est terminé
 def is_game_over(grid):
     if is_grid_full(grid):
@@ -220,3 +242,4 @@ def is_game_over(grid):
 #Donne la valeur de la tuile max
 def get_grid_tile_max(grid):
     return max(get_all_tiles(grid))
+
