@@ -231,6 +231,7 @@ def move_possible(grid):
             liste.append(True)
     return liste
 
+print(move_possible([[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 2], [2, 0, 2, 0]]))
 
 #Teste si le jeu est terminé
 def is_game_over(grid):
