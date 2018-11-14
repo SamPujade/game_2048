@@ -194,4 +194,29 @@ def move_grid(grid, move):
     grid = [[grid[i][j] for j in range(grid_length)] for i in range(grid_length)]
     return grid
 
+#Teste si la grille est pleine ou non
+def is_grid_full(grid):
+    return 0 not in get_all_tiles(grid)
 
+#Teste si un mouvement est possible
+def move_possible(grid):
+    liste = []
+    for d in ["left", "right", "up", "down"]:
+        grid_copy = np.copy(grid)
+        grid_copy2 = np.copy(grid)
+        if np.array_equal(np.copy(move_grid(grid_copy2,d)),grid_copy):
+            liste.append(False)
+        else:
+            liste.append(True)
+    return liste
+
+#Teste si le jeu est terminé
+def is_game_over(grid):
+    if is_grid_full(grid):
+        return move_possible(grid) == [False, False, False, False]
+    else:
+        return False
+
+#Donne la valeur de la tuile max
+def get_grid_tile_max(grid):
+    return max(get_all_tiles(grid))
