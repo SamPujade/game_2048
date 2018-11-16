@@ -2,15 +2,15 @@ import tkinter as tk
 from grid_2048 import *
 from copy import deepcopy
 
-TILES_BG_COLOR = {0: "#9e948a", 2: "#eee4da", 4: "#ede0c8", 8: "#f1b078", \
-                  16: "#eb8c52", 32: "#f67c5f", 64: "#f65e3b", \
-                  128: "#edcf72", 256: "#edcc61", 512: "#edc850", \
-                  1024: "#edc53f", 2048: "#edc22e", 4096: "#5eda92", \
+TILES_BG_COLOR = {0: "#9e948a", 2: "#eee4da", 4: "#ede0c8", 8: "#f1b078",
+                  16: "#eb8c52", 32: "#f67c5f", 64: "#f65e3b",
+                  128: "#edcf72", 256: "#edcc61", 512: "#edc850",
+                  1024: "#edc53f", 2048: "#edc22e", 4096: "#5eda92",
                   8192: "#24ba63"}
 
-TILES_FG_COLOR = {0: "#776e65", 2: "#776e65", 4: "#776e65", 8: "#f9f6f2", \
-                  16: "#f9f6f2", 32: "#f9f6f2", 64: "#f9f6f2", 128: "#f9f6f2", \
-                  256: "#f9f6f2", 512: "#f9f6f2", 1024: "#f9f6f2", \
+TILES_FG_COLOR = {0: "#776e65", 2: "#776e65", 4: "#776e65", 8: "#f9f6f2",
+                  16: "#f9f6f2", 32: "#f9f6f2", 64: "#f9f6f2", 128: "#f9f6f2",
+                  256: "#f9f6f2", 512: "#f9f6f2", 1024: "#f9f6f2",
                   2048: "#f9f6f2", 4096: "#f9f6f2", 8192: "#f9f6f2"}
 
 TILES_FONT = {"Verdana", 40, "bold"}
@@ -28,8 +28,8 @@ def graphical_grid_init_2048():
 
     tk.Label(root, text="Choose grid size").pack()
     spinbox_grid_size = tk.Spinbox(root, from_=2, to=10)
-    spinbox_grid_size.delete(0,"end")
-    spinbox_grid_size.insert(0,4)
+    spinbox_grid_size.delete(0, "end")
+    spinbox_grid_size.insert(0, 4)
     spinbox_grid_size.pack()
     tk.Label(root, text="Choose a theme").pack()
     list_of_themes = tk.Listbox(root)
@@ -51,8 +51,8 @@ def graphical_grid_init_2048():
         side_of_background.pack(side=tk.LEFT)
         global score
         score = ""
-        score_Label = tk.Label(side_of_background, text="Score: "+str(score))
-        score_Label.pack()
+        score_label = tk.Label(side_of_background, text="Score: "+str(score))
+        score_label.pack()
         tk.Label(side_of_background, text=100*" ").pack()
 
         theme = THEMES[str(list_of_themes.curselection()[0])]
@@ -78,16 +78,16 @@ def graphical_grid_init_2048():
             global score, grid_game, grid_game_before_undo
             grid_game_before_undo = deepcopy(grid_game)
             flag = False
-            if event.keycode == 37 and move_possible(grid_game)[0]: #left
+            if event.keycode == 37 and move_possible(grid_game)[0]:  # left
                 grid_game = move_grid(grid_game, 'left')
                 flag = True
-            if event.keycode == 39 and move_possible(grid_game)[1]: #right
+            if event.keycode == 39 and move_possible(grid_game)[1]:  # right
                 grid_game = move_grid(grid_game, 'right')
                 flag = True
-            if event.keycode == 38 and move_possible(grid_game)[2]: #up
+            if event.keycode == 38 and move_possible(grid_game)[2]:  # up
                 grid_game = move_grid(grid_game, 'up')
                 flag = True
-            if event.keycode == 40 and move_possible(grid_game)[3]: #down
+            if event.keycode == 40 and move_possible(grid_game)[3]:  # down
                 grid_game = move_grid(grid_game, 'down')
                 flag = True
             if flag:
@@ -97,7 +97,7 @@ def graphical_grid_init_2048():
                     for j in range(grid_size_2048):
                         display_and_update_graphical_grid(graphical_grid[i][j], grid_game[i][j])
                         score += grid_game[i][j]
-                score_Label.config(text="Score: "+str(score))
+                score_label.config(text="Score: "+str(score))
                 if is_game_over(grid_game):
                     window_game_over = tk.Toplevel(window)
                     window_game_over.title("Game over")
@@ -113,10 +113,10 @@ def graphical_grid_init_2048():
                 for j in range(grid_size_2048):
                     display_and_update_graphical_grid(graphical_grid[i][j], grid_game[i][j])
                     score += grid_game[i][j]
-            score_Label.config(text="Score: "+str(score))
+            score_label.config(text="Score: "+str(score))
 
-        undo_Button = tk.Button(side_of_background, text="Undo", command=undo)
-        undo_Button.pack()
+        undo_button = tk.Button(side_of_background, text="Undo", command=undo)
+        undo_button.pack()
 
         window.bind("<KeyPress>", key_pressed)
 
@@ -124,7 +124,6 @@ def graphical_grid_init_2048():
     button_quit.pack(side=tk.LEFT)
     button_play = tk.Button(root, text="Play", command=start_game)
     button_play.pack(side=tk.RIGHT)
-
 
     root.mainloop()
 
